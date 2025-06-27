@@ -1,0 +1,50 @@
+{
+  "name": "Trading Workflow",
+  "nodes": [
+    {
+      "name": "Market Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [-200, 0],
+      "parameters": {
+        "url": "https://api.exchange.example/ticker",
+        "responseFormat": "json"
+      }
+    },
+    {
+      "name": "Trading Condition",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json[\"price\"] }}",
+              "operation": "larger",
+              "value2": 1000
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [200, 0],
+      "parameters": {
+        "subject": "Trading Alert",
+        "text": "Price target reached."
+      }
+    }
+  ],
+  "connections": {
+    "Market Data": {
+      "main": [[{ "node": "Trading Condition", "type": "main", "index": 0 }]]
+    },
+    "Trading Condition": {
+      "main": [[{ "node": "Notification", "type": "main", "index": 0 }]]
+    }
+  }
+}
