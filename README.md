@@ -30,3 +30,23 @@ La réponse contiendra l'identifiant et l'URL raccourcie retournés par le workf
 - Une base Airtable contenant la table que vous souhaitez utiliser pour stocker les liens.
 - Facultatif : configurez la variable d'environnement `WEBHOOK_URL` de n8n si vous utilisez un domaine personnalisé.
 
+
+## Bot de trading
+
+Ce dépôt propose également un exemple de **bot de trading** écrit en Python (`trading_bot.py`).
+Il s'agit d'une ébauche reposant sur la librairie `yfinance` pour récupérer les cours
+boursiers en temps réel. Le programme analyse les données à l'aide d'une stratégie
+simple de croisements de moyennes mobiles pour générer des signaux **BUY** ou **SELL**.
+Chaque signal déclenche l'envoi d'une notification (fonctionalité à personnaliser
+selon vos besoins).
+
+Pour l'exécuter :
+
+```bash
+pip install -r requirements.txt
+python trading_bot.py
+```
+
+Le bot télécharge les cours de l'action `AAPL` toutes les minutes et affiche les
+signaux détectés. Vous pouvez adapter la logique d'analyse et les notifications en
+modifiant le fichier `trading_bot.py`.
